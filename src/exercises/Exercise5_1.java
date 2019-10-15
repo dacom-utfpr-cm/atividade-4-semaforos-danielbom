@@ -11,15 +11,15 @@ package exercises;
  */
 public class Exercise5_1 {
 	public static void main(String[] args) {
-		int nthreads = 10;
+		int nthreads = 3;
 		SimpleBarrier barrier = new SimpleBarrier(nthreads);
 
 		Runnable waitAll = () -> {
 			String name = Thread.currentThread().getName();
 			System.out.println(name + " esperando...");
-			
+
 			barrier.block();
-			
+
 			System.out.println(name + " liberado...");
 		};
 		

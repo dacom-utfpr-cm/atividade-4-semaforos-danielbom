@@ -16,7 +16,6 @@ public class Exercise6 {
 	public static void main(String[] args) {
 		int nthreads = 3;
 		Semaphore mutex = new Semaphore(1);
-		Semaphore swaper;
 		Semaphore barrier1 = new Semaphore(0);
 		Semaphore barrier2 = new Semaphore(0);
 		Shared<Integer> count = new Shared<Integer>(0);
@@ -58,7 +57,6 @@ public class Exercise6 {
 				}
 				System.out.println(name + " liberado... " + i);
 			}
-			
 		};
 		
 		for (int i = 0; i < nthreads; i++) {

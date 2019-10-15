@@ -8,11 +8,10 @@ public class Barrier {
 	
 	int permits;
 
-	int k = 0;
+	int k = 0, count = 0;
 	Semaphore mutex = new Semaphore(1);
 	Semaphore barrier1 = new Semaphore(0);
 	Semaphore barrier2 = new Semaphore(0);
-	Shared<Integer> count = new Shared<Integer>(0);
 	
 	public Barrier(int permits) {
 		this.permits = permits;
@@ -21,11 +20,13 @@ public class Barrier {
 	private void block(Semaphore barrier) {
 		try {
 			mutex.acquire();
-			count.set(count.get() + 1);
+			count++;
+			System.out.println(k + " " + count + " " + barrier.availablePermits());
 			mutex.release();
 			
-			if (count.get() == permits) {
-				count.set(0);
+			if (count == permits) {
+				count = 0;
+				k = (k + 1) % 2;
 				barrier.release();
 			}
 			
@@ -36,7 +37,6 @@ public class Barrier {
 		} catch (InterruptedException e) {
 			// ...
 		}
-		k = (k + 1) % 2;
 	}
 	
 	public void block() {
